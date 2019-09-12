@@ -13,8 +13,17 @@ pipeline {
       }
     }
     stage('Test ') {
-      steps {
-        sh './jenkins/scripts/test.sh'
+      parallel {
+        stage('Test ') {
+          steps {
+            sh './jenkins/scripts/test.sh'
+          }
+        }
+        stage('rollback_to_dev') {
+          steps {
+            sh 'sh  date'
+          }
+        }
       }
     }
     stage('Deliver ') {
